@@ -18,8 +18,8 @@ public:
 
 	T& GetX() { return x; }
 	T& GetY() { return y; }
-	T GetY() const { return y; }
-	T GetX() const { return x; }
+	const T& GetY() const { return y; }
+	const T& GetX() const { return x; }
 		
 	void SetX(const T X) { x = X; }
 	void SetY(const T Y) { y = Y; }
@@ -69,9 +69,9 @@ public:
 	T& GetX() { return x; }
 	T& GetY() { return y; }
 	T& GetZ() { return z; }
-	T GetY() const { return y; }
-	T GetX() const { return x; }
-	T GetZ() const { return z; }
+	const T& GetY() const { return y; }
+	const T& GetX() const { return x; }
+	const T& GetZ() const { return z; }
 
 	void SetX(const T X) { x = X; }
 	void SetY(const T Y) { y = Y; }
