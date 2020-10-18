@@ -1,7 +1,9 @@
 #pragma once
 #include <algorithm>
-// Uncomment to disable assert()
-//#define NDEBUG
+/*
+Uncomment to disable assert()
+#define NDEBUG 
+*/
 #include <assert.h>
 
 template<typename T>
@@ -41,6 +43,7 @@ public:
 
 	// Basic functions
 	float Square() { return x * x + y * y; }
+	static float Square(const vec2d& vec) { return vec.x * vec.x + vec.y * vec.y; }
 	float Magnitude() { return sqrt(Square()); }
 	float Distance(const vec2d& vec) { vec2d sum = *this + vec; return sum.Magnitude(); }
 	float Min() { T m = x; m = std::min(x, m); m = std::min(y, m); return m; } // We set to var x as setting to 0 || 999 isn't wise
@@ -49,7 +52,8 @@ public:
 	vec2d Max(vec2d& vec) { return vec2d(std::max(x, vec.x), std::max(y, vec.y)); } // Returns a new vector using the largest values of the two vectors
 
 	// Vector operations
-	float DotProduct(const vec2d& vec) { x * vec.x + y * vec.y; }
+	float DotProduct(const vec2d& vec) { return x * vec.x + y * vec.y; }
+	static float DotProduct(const vec2d& v1, const vec2d& v2) { return v1.x * v2.x + v1.y * v2.y; }
 	vec2d& Normalize() { if (Magnitude() != 0) return *this /= Magnitude(); }
 };
 
@@ -94,6 +98,7 @@ public:
 
 	// Basic functions
 	float Square() { return x * x + y * y + z * z; }
+	static float Square(const vec3d& vec) { return vec.x * vec.x + vec.y * vec.y + vec.z * vec.z; }
 	float Magnitude() { return sqrt(Square()); }
 	float Distance(const vec3d& vec) { vec3d sum = *this + vec; return sum.Magnitude(); }
 	float Min() { T m = x; m = std::min(x, m); m = std::min(y, m); m = std::min(z, m); return m; } 
@@ -102,8 +107,9 @@ public:
 	vec3d Max(vec3d& vec) { return vec3d(std::max(x, vec.x), std::max(y, vec.y), std::max(z, vec.z)); }
 
 	// Vector operations
-	float DotProduct(const vec3d& vec) { x * vec.x + y * vec.y + z * vec.z; }
-	vec3d& CrossProduct(const vec3d& vec) { x = y * vec.z - z * vec.y; y = z * vec.x - x * vec.z; z = x * vec.y - y * vec.x; return *this; } // Needs testing
-	vec3d CrossProduct(const vec3d a, const vec3d b) const { return vec3d(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x); } // Needs testing
+	float DotProduct(const vec3d& vec) { return x * vec.x + y * vec.y + z * vec.z; }
+	static float DotProduct(const vec3d& v1, const vec3d& v2) { return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z; }
+	vec3d& CrossProduct(const vec3d& vec) { x = y * vec.z - z * vec.y; y = z * vec.x - x * vec.z; z = x * vec.y - y * vec.x; return *this; } 
+	static vec3d CrossProduct(const vec3d& a, const vec3d& b) { return vec3d(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x); }
 	vec3d& Normalize() { if (Magnitude() != 0) return *this /= Magnitude(); }
 };
