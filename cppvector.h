@@ -2,14 +2,18 @@
 #include <algorithm>
 /*
 Uncomment to disable assert()
-#define NDEBUG 
+#define NDEBUG
 */
 #include <assert.h>
 
 template<typename T>
 class vec2d {
 public:
-	T x, y;
+	union {
+		struct { T x, y; };
+		struct { T r, g; };
+		struct { T a, b; };
+	};
 	vec2d() = default;
 	~vec2d() = default;
 	vec2d(T X, T Y)
@@ -22,7 +26,7 @@ public:
 	T& GetY() { return y; }
 	const T& GetY() const { return y; }
 	const T& GetX() const { return x; }
-		
+
 	void SetX(const T X) { x = X; }
 	void SetY(const T Y) { y = Y; }
 
@@ -57,11 +61,14 @@ public:
 	vec2d& Normalize() { if (Magnitude() != 0) return *this /= Magnitude(); }
 };
 
-
 template<typename T>
 class vec3d {
 public:
-	T x, y, z;
+	union {
+		struct { T x, y, z; };
+		struct { T r, g, b; };
+		struct { T a, b, c; };
+	};
 	vec3d() = default;
 	~vec3d() = default;
 	vec3d(T X, T Y, T Z)
@@ -82,7 +89,7 @@ public:
 	void SetZ(const T Z) { z = Z; }
 
 	// Operator overloads
-	vec3d operator+ (const vec3d& vec) const { return vec3d(x + vec.x, y + vec.y, z + vec.z); } 
+	vec3d operator+ (const vec3d& vec) const { return vec3d(x + vec.x, y + vec.y, z + vec.z); }
 	vec3d& operator+= (const vec3d& vec) { x += vec.x; y += vec.y; z += vec.z; return *this; }
 	vec3d operator- (const vec3d& vec) const { return vec3d(x - vec.x, y - vec.y, z - vec.z); }
 	vec3d& operator-= (const vec3d& vec) { x -= vec.x; y -= vec.y; z -= vec.z; return *this; }
@@ -101,7 +108,7 @@ public:
 	static float Square(const vec3d& vec) { return vec.x * vec.x + vec.y * vec.y + vec.z * vec.z; }
 	float Magnitude() { return sqrt(Square()); }
 	float Distance(const vec3d& vec) { vec3d sum = *this + vec; return sum.Magnitude(); }
-	float Min() { T m = x; m = std::min(x, m); m = std::min(y, m); m = std::min(z, m); return m; } 
+	float Min() { T m = x; m = std::min(x, m); m = std::min(y, m); m = std::min(z, m); return m; }
 	vec3d Min(vec3d& vec) { return vec3d(std::min(x, vec.x), std::min(y, vec.y), std::min(z, vec.z)); }
 	float Max() { T m = x; m = std::max(x, m); m = std::max(y, m); m = std::max(z, m); return m; }
 	vec3d Max(vec3d& vec) { return vec3d(std::max(x, vec.x), std::max(y, vec.y), std::max(z, vec.z)); }
@@ -109,7 +116,7 @@ public:
 	// Vector operations
 	float DotProduct(const vec3d& vec) { return x * vec.x + y * vec.y + z * vec.z; }
 	static float DotProduct(const vec3d& v1, const vec3d& v2) { return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z; }
-	vec3d& CrossProduct(const vec3d& vec) { x = y * vec.z - z * vec.y; y = z * vec.x - x * vec.z; z = x * vec.y - y * vec.x; return *this; } 
+	vec3d& CrossProduct(const vec3d& vec) { x = y * vec.z - z * vec.y; y = z * vec.x - x * vec.z; z = x * vec.y - y * vec.x; return *this; }
 	static vec3d CrossProduct(const vec3d& a, const vec3d& b) { return vec3d(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x); }
 	vec3d& Normalize() { if (Magnitude() != 0) return *this /= Magnitude(); }
 };
