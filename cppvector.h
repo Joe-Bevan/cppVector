@@ -49,7 +49,7 @@ public:
 	float Square() { return x * x + y * y; }
 	static float Square(const vec2d& vec) { return vec.x * vec.x + vec.y * vec.y; }
 	float Magnitude() { return sqrt(Square()); }
-	float Distance(const vec2d& vec) { vec2d sum = *this + vec; return sum.Magnitude(); }
+	float Distance(const vec2d& vec) { vec2d sum = *this - vec; return sum.Magnitude(); }
 	float Min() { T m = x; m = std::min(x, m); m = std::min(y, m); return m; } // We set to var x as setting to 0 || 999 isn't wise
 	vec2d Min(vec2d& vec) { return vec2d(std::min(x, vec.x), std::min(y, vec.y)); }
 	float Max() { T m = x; m = std::max(x, m); m = std::max(y, m); return m; }
@@ -107,7 +107,7 @@ public:
 	float Square() { return x * x + y * y + z * z; }
 	static float Square(const vec3d& vec) { return vec.x * vec.x + vec.y * vec.y + vec.z * vec.z; }
 	float Magnitude() { return sqrt(Square()); }
-	float Distance(const vec3d& vec) { vec3d sum = *this + vec; return sum.Magnitude(); }
+	float Distance(const vec3d& vec) { vec3d sum = *this - vec; return sum.Magnitude(); }
 	float Min() { T m = x; m = std::min(x, m); m = std::min(y, m); m = std::min(z, m); return m; }
 	vec3d Min(vec3d& vec) { return vec3d(std::min(x, vec.x), std::min(y, vec.y), std::min(z, vec.z)); }
 	float Max() { T m = x; m = std::max(x, m); m = std::max(y, m); m = std::max(z, m); return m; }
